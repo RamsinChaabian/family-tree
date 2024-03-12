@@ -9,7 +9,7 @@ font-family: 'Yekan Bakh FaNum';
 
 }
 .tree {
- width:5000px;
+width:5000px;
 zoom: 1; /* Initial zoom level */
 transition: zoom 0.5s ease-in-out;
 }
@@ -151,4 +151,33 @@ margin: 0;
 footer a {
 color: black;
 text-decoration: none;
+}
+.close-icon {
+cursor: pointer;
+font-size: 16px;
+color: #b96060;
+position: absolute;
+top: 10px;
+right: 10px;
+transition: transform 0.3s ease;
+width: 24px;
+height: 24px;
+border:1px solid#b96060;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.close-icon:hover {
+transform: scale(1.2);
+}
+footer {
+transition: opacity 0.5s ease, visibility 0.5s ease;
+opacity: 1;
+visibility: visible;
+}
+.footer-hidden {
+opacity: 0;
+visibility: hidden;
 }

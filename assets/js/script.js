@@ -17,4 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('resize', handleResize);
     container.addEventListener('wheel', handleWheel);
+
+    var closeIcon = document.querySelector('.close-icon');
+    var footer = document.querySelector('footer');
+
+    closeIcon.addEventListener('click', function() {
+        footer.classList.toggle('footer-hidden');
+    });
+
 });

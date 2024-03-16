@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
 let scale = 1;
 let initialScale = 1;
 let touchStartDistance = 0;
+var treeRect = document.getElementById('tree').getBoundingClientRect();
 
 function handleResize() {
     scale = 0.52;
     container.style.transform = `scale(${scale})`;
 
-    var treeRect = document.getElementById('tree').getBoundingClientRect();
 
     window.scrollTo({
         left: treeRect.x+400,
@@ -50,6 +50,9 @@ document.addEventListener('touchstart', function(event) {
 
 // Listen for touch move event
 document.addEventListener('touchmove', function(event) {
+    // Prevent default pinch-to-zoom behavior
+    event.preventDefault();
+
     if (event.touches.length === 2) {
         // Calculate the distance between two fingers during move
         const touchMoveDistance = Math.hypot(
@@ -65,12 +68,17 @@ document.addEventListener('touchmove', function(event) {
 
         // Apply the new scale
         container.style.transform = `scale(${scale})`;
-        
+
         console.log(container.style.transform);
-        
-        event.preventDefault(); // Prevent default pinch-to-zoom behavior
+
+        // Adjust scroll position
+        window.scrollTo({
+            left: treeRect.x + 400,
+            behavior: 'smooth'
+        });
     }
 });
+
 
 handleResize();
 

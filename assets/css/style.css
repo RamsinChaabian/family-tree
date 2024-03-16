@@ -8,10 +8,8 @@ background-color: #f9f9f9;
 font-family: 'Yekan Bakh FaNum';
 
 }
-.tree {
-width:5000px;
-zoom: 1; /* Initial zoom level */
-transition: zoom 0.5s ease-in-out;
+.tree,body {
+width:max-content;
 }
 
 .tree ul {

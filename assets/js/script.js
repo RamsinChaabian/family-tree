@@ -1,86 +1,85 @@
 document.addEventListener('DOMContentLoaded', function() {
     var container = document.getElementById('tree');
+
+    let scale = 1;
+    let initialScale = 1;
+    let touchStartDistance = 0;
+    var treeRect = document.getElementById('tree').getBoundingClientRect();
     
-let scale = 1;
-let initialScale = 1;
-let touchStartDistance = 0;
-var treeRect = document.getElementById('tree').getBoundingClientRect();
-
-function handleResize() {
-    scale = 0.52;
-    container.style.transform = `scale(${scale})`;
-
-
-    window.scrollTo({
-        left: treeRect.x+1200,
-        behavior: 'smooth'
-    });
+    let isZooming = false;
     
-}
-
-
-function handleWheel(event) {
-    event.preventDefault();
-
-    const delta = Math.max(-1, Math.min(1, event.deltaY));
-    const scaleFactor = 0.1;
-
-    // Adjust the scale factor based on the delta
-    const newScale = scale * (1 - delta * scaleFactor);
-
-    // Limit the scale factor within desired bounds
-    scale = Math.min(Math.max(0.4, newScale), 1);
-
-    // Apply the new scale
-    container.style.transform = `scale(${scale})`;
-   
-}
-
-// Listen for touch start event
-document.addEventListener('touchstart', function(event) {
-    if (event.touches.length === 2) {
-        // Calculate the distance between two fingers
-        touchStartDistance = Math.hypot(
-            event.touches[0].clientX - event.touches[1].clientX,
-            event.touches[0].clientY - event.touches[1].clientY
-        );
-        initialScale = scale;
-    }
-});
-
-// Listen for touch move event
-document.addEventListener('touchmove', function(event) {
-    // Prevent default pinch-to-zoom behavior
-    //event.preventDefault();
-
-    if (event.touches.length === 2) {
-        // Calculate the distance between two fingers during move
-        const touchMoveDistance = Math.hypot(
-            event.touches[0].clientX - event.touches[1].clientX,
-            event.touches[0].clientY - event.touches[1].clientY
-        );
-        
-        // Calculate the new scale based on the initial scale and the ratio of start distance to move distance
-        const newScale = initialScale * (touchMoveDistance / touchStartDistance);
-
-        // Limit the scale factor within desired bounds
-        scale = Math.min(Math.max(0.4, newScale), 1);
-
-        // Apply the new scale
+    function handleResize() {
+        scale = 0.52;
         container.style.transform = `scale(${scale})`;
-
-        console.log(container.style.transform);
-
-        // Adjust scroll position
+    
         window.scrollTo({
-            left: treeRect.x + 400,
+            left: treeRect.x + 1200,
             behavior: 'smooth'
         });
     }
-});
-
-
-handleResize();
+    
+    function handleWheel(event) {
+        event.preventDefault();
+    
+        const delta = Math.max(-1, Math.min(1, event.deltaY));
+        const scaleFactor = 0.1;
+    
+        const newScale = scale * (1 - delta * scaleFactor);
+    
+        scale = Math.min(Math.max(0.4, newScale), 1);
+    
+        container.style.transform = `scale(${scale})`;
+    
+       
+        isZooming = true;
+        setTimeout(() => {
+            isZooming = false;
+        }, 300); 
+    }
+    
+    document.addEventListener('touchstart', function(event) {
+        if (event.touches.length === 2) {
+            touchStartDistance = Math.hypot(
+                event.touches[0].clientX - event.touches[1].clientX,
+                event.touches[0].clientY - event.touches[1].clientY
+            );
+            initialScale = scale;
+        }
+    });
+    
+    document.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+    
+        if (event.touches.length === 2) {
+            const touchMoveDistance = Math.hypot(
+                event.touches[0].clientX - event.touches[1].clientX,
+                event.touches[0].clientY - event.touches[1].clientY
+            );
+            
+            const newScale = initialScale * (touchMoveDistance / touchStartDistance);
+    
+            scale = Math.min(Math.max(0.4, newScale), 1);
+    
+            container.style.transform = `scale(${scale})`;
+    
+            isZooming = true;
+            setTimeout(() => {
+                isZooming = false;
+            }, 300);
+        }
+    });
+     
+    window.addEventListener('scroll', function() {
+        if (!isZooming) {
+            window.scrollTo({
+                left: treeRect.x + 400,
+                behavior: 'smooth'
+            });
+        }
+    });
+    
+    handleResize();
+    
 
 window.addEventListener('resize', handleResize);
 container.addEventListener('wheel', handleWheel);

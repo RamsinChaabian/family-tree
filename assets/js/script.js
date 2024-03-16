@@ -1,5 +1,54 @@
 document.addEventListener('DOMContentLoaded', function() {
-   // Listen for touch move event
+    var container = document.getElementById('tree');
+    
+let scale = 1;
+let initialScale = 1;
+let touchStartDistance = 0;
+var treeRect = document.getElementById('tree').getBoundingClientRect();
+
+function handleResize() {
+    scale = 0.52;
+    container.style.transform = `scale(${scale})`;
+
+
+    window.scrollTo({
+        left: treeRect.x+1200,
+        behavior: 'smooth'
+    });
+    
+}
+
+
+function handleWheel(event) {
+    event.preventDefault();
+
+    const delta = Math.max(-1, Math.min(1, event.deltaY));
+    const scaleFactor = 0.1;
+
+    // Adjust the scale factor based on the delta
+    const newScale = scale * (1 - delta * scaleFactor);
+
+    // Limit the scale factor within desired bounds
+    scale = Math.min(Math.max(0.4, newScale), 1);
+
+    // Apply the new scale
+    container.style.transform = `scale(${scale})`;
+   
+}
+
+// Listen for touch start event
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length === 2) {
+        // Calculate the distance between two fingers
+        touchStartDistance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+        );
+        initialScale = scale;
+    }
+});
+
+// Listen for touch move event
 document.addEventListener('touchmove', function(event) {
     // Prevent default pinch-to-zoom behavior
     event.preventDefault();
@@ -37,6 +86,9 @@ document.addEventListener('touchmove', function(event) {
     }
 });
 
+
+
+handleResize();
 
 window.addEventListener('resize', handleResize);
 container.addEventListener('wheel', handleWheel);

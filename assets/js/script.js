@@ -12,7 +12,7 @@ function handleResize() {
 
 
     window.scrollTo({
-        left: treeRect.x+400,
+        left: treeRect.x+1200,
         behavior: 'smooth'
     });
     
@@ -51,7 +51,7 @@ document.addEventListener('touchstart', function(event) {
 // Listen for touch move event
 document.addEventListener('touchmove', function(event) {
     // Prevent default pinch-to-zoom behavior
-    event.preventDefault();
+    //event.preventDefault();
 
     if (event.touches.length === 2) {
         // Calculate the distance between two fingers during move

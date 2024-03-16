@@ -8,8 +8,7 @@ function handleResize() {
     container.style.transform = `scale(${scale})`;
 
     var treeRect = document.getElementById('tree').getBoundingClientRect();
-    console.log(treeRect.x);
-    
+
     window.scrollTo({
         left: treeRect.x+400,
         behavior: 'smooth'
@@ -28,7 +27,7 @@ function handleWheel(event) {
     const newScale = scale * (1 - delta * scaleFactor);
 
     // Limit the scale factor within desired bounds
-    scale = Math.min(Math.max(0.4, newScale), 3);
+    scale = Math.min(Math.max(0.4, newScale), 1);
 
     // Apply the new scale
     container.style.transform = `scale(${scale})`;

@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         scale = 0.52;
         container.style.transform = `scale(${scale})`;
     
+        const scrollLeft = window.innerWidth >= 768 ? treeRect.x + 1200 : treeRect.x + 1600;
+        console.log(scrollLeft);
         window.scrollTo({
-            left: treeRect.x + 1200,
+            left: scrollLeft,
             behavior: 'smooth'
         });
     }
@@ -39,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     event.touches[0].clientY - event.touches[1].clientY
                 );
                 initialScale = scale;
+                
             } else if (event.type === 'touchmove') {
                 const touchMoveDistance = Math.hypot(
                     event.touches[0].clientX - event.touches[1].clientX,

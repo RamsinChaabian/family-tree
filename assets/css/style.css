@@ -10,7 +10,7 @@ font-family: 'Yekan Bakh FaNum';
 }
 .tree,body {
 width:max-content;
-touch-action: none;
+touch-action: auto;
 }
 
 .tree ul {

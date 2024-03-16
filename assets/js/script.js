@@ -61,11 +61,13 @@ document.addEventListener('touchmove', function(event) {
         const newScale = initialScale * (touchMoveDistance / touchStartDistance);
 
         // Limit the scale factor within desired bounds
-        scale = Math.min(Math.max(0.4, newScale), 3);
+        scale = Math.min(Math.max(0.4, newScale), 1);
 
         // Apply the new scale
         container.style.transform = `scale(${scale})`;
-
+        
+        console.log(container.style.transform);
+        
         event.preventDefault(); // Prevent default pinch-to-zoom behavior
     }
 });

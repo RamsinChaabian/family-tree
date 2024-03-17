@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         container.style.transform = `scale(${scale})`;
     
         const scrollLeft = window.innerWidth >= 768 ? treeRect.x + 1200 : treeRect.x + 1600;
-        console.log(scrollLeft);
+        
         window.scrollTo({
             left: scrollLeft,
             behavior: 'smooth'
